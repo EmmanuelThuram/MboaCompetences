@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MboaCompetences.ViewModels"
+             x:Class="MboaCompetences.Views.ElevesPage"
+             x:DataType="vm:ElevesViewModel"
+             Title="🌳 MboaCompétences">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="16,14" RowSpacing="10">
+        <Label Text="Qui joue aujourd'hui ?" Style="{StaticResource Etiquette}" />
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Eleves}" SelectionMode="None">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" Spacing="8" Padding="20">
+                    <Label Text="👧👦" FontSize="48" HorizontalOptions="Center" />
+                    <Label Text="Aucun enfant pour l'instant" Style="{StaticResource Titre}" HorizontalOptions="Center" />
+                    <Label Text="Ajoutez un enfant, ou chargez les données de démonstration pour voir l'application avec cinq semaines d'historique."
+                           Style="{StaticResource Gris}" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:EleveItem">
+                    <Border Style="{StaticResource Carte}" Margin="0,0,0,10">
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="12">
+                            <Border WidthRequest="46" HeightRequest="46" StrokeThickness="0" StrokeShape="RoundRectangle 23"
+                                    BackgroundColor="{Binding Couleur}">
+                                <Label Text="{Binding Initiale}" FontFamily="OpenSansSemibold" FontSize="22" TextColor="#3A2F00"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label Text="{Binding Prenom}" FontFamily="OpenSansSemibold" FontSize="18" />
+                                <Label Text="{Binding Detail}" Style="{StaticResource Gris}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="✓ actif" TextColor="{StaticResource Vert}" FontFamily="OpenSansSemibold"
+                                   FontSize="12" VerticalOptions="Center" IsVisible="{Binding EstActif}" />
+                            <Button Grid.Column="3" Text="🗑" BackgroundColor="Transparent" FontSize="18" WidthRequest="46"
+                                    Padding="0" Command="{Binding Supprimer}" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Choisir}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="8">
+            <Button Text="＋ Ajouter un enfant" Style="{StaticResource BoutonSecondaire}" Command="{Binding AjouterCommand}" />
+            <Button Text="🧪 Charger des données de démonstration" Style="{StaticResource BoutonJaune}"
+                    Command="{Binding ChargerDemoCommand}" />
+            <ActivityIndicator IsRunning="{Binding Occupe}" IsVisible="{Binding Occupe}" Color="{StaticResource Vert}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

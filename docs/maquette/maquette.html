@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Maquette MboaCompétences</title>
+<style>
+@page { size: A4 landscape; margin: 0; }
+:root{
+  --vert:#007A5E; --vert-fonce:#00573F; --vert-clair:#E3F4EE;
+  --rouge:#CE1126; --jaune:#FCD116; --orange:#F59E0B;
+  --texte:#1F2937; --gris:#6B7280; --fond:#F7F8F5; --carte:#FFFFFF; --bord:#E5E7EB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",Arial,sans-serif;color:var(--texte);background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:297mm;height:210mm;padding:12mm 14mm;page-break-after:always;position:relative;overflow:hidden;background:#fff}
+.page:last-child{page-break-after:auto}
+h1.titre{font-size:22px;color:var(--vert-fonce);margin-bottom:2px}
+.sous{color:var(--gris);font-size:12px;margin-bottom:10px}
+.bande{position:absolute;left:0;right:0;bottom:0;height:7px;display:flex}
+.bande i{flex:1}.bande i:nth-child(1){background:var(--vert)}.bande i:nth-child(2){background:var(--rouge)}.bande i:nth-child(3){background:var(--jaune)}
+.pied{position:absolute;left:14mm;right:14mm;bottom:11px;font-size:9px;color:var(--gris);display:flex;justify-content:space-between}
+
+/* couverture */
+.cover{background:linear-gradient(135deg,var(--vert-fonce),var(--vert));color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 24mm}
+.cover .logo{width:92px;height:92px;border-radius:24px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:52px;margin-bottom:22px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.cover h1{font-size:46px;letter-spacing:.5px}
+.cover h2{font-weight:400;font-size:20px;margin:8px 0 26px;opacity:.95}
+.cover p{font-size:14px;line-height:1.6;max-width:640px;opacity:.95}
+.cover .tags{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
+.cover .tags span{border:1px solid rgba(255,255,255,.6);border-radius:20px;padding:5px 14px;font-size:12px}
+
+/* téléphone */
+.phones{display:flex;gap:16px;justify-content:center;margin-top:4px}
+.fig{width:84mm;text-align:center}
+.fig .leg{font-size:11.5px;font-weight:600;color:var(--vert-fonce);margin-top:7px}
+.fig .leg small{display:block;font-weight:400;color:var(--gris);font-size:10px;margin-top:1px}
+.phone{width:78mm;height:150mm;margin:0 auto;border:3px solid #1f2937;border-radius:26px;overflow:hidden;background:var(--fond);position:relative;display:flex;flex-direction:column;text-align:left;font-size:10.5px}
+.status{height:16px;background:var(--vert-fonce);color:#fff;font-size:8px;display:flex;justify-content:space-between;align-items:center;padding:0 12px}
+.appbar{background:var(--vert);color:#fff;padding:9px 12px;display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px}
+.appbar .sp{flex:1}.appbar small{font-weight:400;font-size:9.5px;opacity:.9}
+.body{flex:1;padding:10px;overflow:hidden;display:flex;flex-direction:column;gap:8px}
+.card{background:var(--carte);border:1px solid var(--bord);border-radius:12px;padding:9px 10px}
+.btn{background:var(--vert);color:#fff;text-align:center;border-radius:22px;padding:9px;font-weight:700;font-size:11px}
+.btn.sec{background:#fff;color:var(--vert);border:1.5px solid var(--vert)}
+.btn.jaune{background:var(--jaune);color:#3a2f00}
+.btn.rouge{background:var(--rouge)}
+.lbl{font-size:9px;color:var(--gris);text-transform:uppercase;letter-spacing:.6px;font-weight:600}
+.row{display:flex;align-items:center;gap:8px}
+.grow{flex:1}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--jaune);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#3a2f00}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block;flex:none}
+.v{background:#16A34A}.o{background:var(--orange)}.r{background:var(--rouge)}.g{background:#CBD5E1}
+.nav{display:flex;border-top:1px solid var(--bord);background:#fff}
+.nav div{flex:1;text-align:center;padding:6px 0 5px;font-size:8.5px;color:var(--gris)}
+.nav div b{display:block;font-size:15px;font-weight:400}
+.nav .on{color:var(--vert);font-weight:700}
+.chip{display:inline-block;border-radius:10px;padding:2px 8px;font-size:9px;font-weight:700}
+.bar{height:7px;border-radius:4px;background:#E5E7EB;overflow:hidden}.bar i{display:block;height:100%}
+.matiere{border-radius:14px;padding:11px;color:#fff;display:flex;align-items:center;gap:10px}
+.matiere .ic{font-size:26px;width:42px;height:42px;background:rgba(255,255,255,.22);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.matiere b{font-size:13px;display:block}.matiere small{opacity:.92}
+.enonce{font-size:12.5px;line-height:1.5;background:#FFFBE6;border:1px solid #F3E39A;border-radius:12px;padding:11px}
+.qcm{border:1.5px solid var(--bord);background:#fff;border-radius:12px;padding:9px 11px;font-size:11.5px}
+.qcm.ok{border-color:#16A34A;background:#E8F8EE;font-weight:700}
+.qcm.ko{border-color:var(--rouge);background:#FDECEE}
+.input{border:2px solid var(--vert);border-radius:12px;background:#fff;padding:12px;font-size:20px;text-align:center;font-weight:700;color:var(--vert-fonce)}
+.kpi{display:flex;gap:7px}.kpi .card{flex:1;text-align:center;padding:8px 4px}
+.kpi b{font-size:19px;display:block;color:var(--vert-fonce)}
+.tabs{display:flex;background:#fff;border-bottom:1px solid var(--bord)}
+.tabs div{flex:1;text-align:center;padding:7px 0;font-size:9.5px;color:var(--gris)}
+.tabs .on{color:var(--vert);font-weight:700;border-bottom:3px solid var(--vert)}
+table.t{width:100%;border-collapse:collapse;font-size:9.5px}
+table.t th{background:var(--vert);color:#fff;text-align:left;padding:4px 5px}
+table.t td{padding:4px 5px;border-bottom:1px solid var(--bord)}
+.note{font-size:10.5px;line-height:1.5;color:var(--texte)}
+.note li{margin-left:16px;margin-bottom:3px}
+
+/* page conception */
+.cols{display:flex;gap:16px}
+.box{border:1px solid var(--bord);border-radius:12px;padding:12px;background:#fff}
+.box h3{color:var(--vert-fonce);font-size:13px;margin-bottom:7px}
+.sw{display:flex;gap:8px;margin:6px 0 4px}.sw div{flex:1;border-radius:8px;height:44px;color:#fff;font-size:9px;padding:5px;display:flex;align-items:flex-end}
+.flow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px}
+.flow .n{background:var(--vert-clair);border:1.5px solid var(--vert);color:var(--vert-fonce);border-radius:10px;padding:6px 10px;font-size:10.5px;font-weight:600;text-align:center}
+.flow .a{color:var(--vert);font-size:16px;font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- ============ COUVERTURE ============ -->
+<section class="page cover">
+  <div class="logo">🌳</div>
+  <h1>MboaCompétences</h1>
+  <h2>APC-MALIN · L'accompagnement de l'Approche Par Compétences au primaire</h2>
+  <p>Maquette de l'interface (front-end) de l'application mobile .NET MAUI / C#. Une application <b>100 % hors-ligne</b>, pour les élèves du primaire camerounais (SIL à CM2), avec un tableau de bord pour les parents.</p>
+  <div class="tags"><span>.NET MAUI + XAML</span><span>C# · SQLite-net</span><span>Hors-ligne</span><span>SIL → CM2</span><span>Export PDF</span></div>
+  <div class="bande"><i></i><i></i><i></i></div>
+</section>
+
+<!-- ============ CONCEPTION ============ -->
+<section class="page">
+  <h1 class="titre">Charte graphique et parcours</h1>
+  <div class="sous">Les couleurs du drapeau camerounais, avec les trois feux de suivi des compétences.</div>
+  <div class="cols">
+    <div class="box" style="flex:1">
+      <h3>Palette</h3>
+      <div class="sw">
+        <div style="background:#007A5E">Vert Mboa #007A5E</div>
+        <div style="background:#CE1126">Rouge #CE1126</div>
+        <div style="background:#FCD116;color:#3a2f00">Jaune #FCD116</div>
+        <div style="background:#00573F">Vert foncé #00573F</div>
+      </div>
+      <div style="margin-top:12px" class="lbl">Feux tricolores (suivi des compétences)</div>
+      <div class="row" style="margin-top:6px;gap:16px;font-size:11px">
+        <span><span class="dot v"></span> Vert : compétence acquise</span>
+        <span><span class="dot o"></span> Orange : en cours</span>
+        <span><span class="dot r"></span> Rouge : non acquise</span>
+        <span><span class="dot g"></span> Gris : à découvrir</span>
+      </div>
+      <h3 style="margin-top:14px">Principes</h3>
+      <ul class="note">
+        <li>Gros boutons, textes courts et pictogrammes : lisible par un enfant de 6 ans.</li>
+        <li>Aucune connexion nécessaire : tout se passe dans SQLite sur le téléphone.</li>
+        <li>L'élève ne voit jamais de « note », seulement des étoiles et des encouragements.</li>
+        <li>Le parent lit l'état des compétences en un coup d'œil grâce aux feux.</li>
+      </ul>
+    </div>
+    <div class="box" style="flex:1.15">
+      <h3>Parcours de l'utilisateur</h3>
+      <div class="lbl">Côté élève</div>
+      <div class="flow">
+        <div class="n">① Choix du profil</div><div class="a">›</div>
+        <div class="n">② Accueil élève</div><div class="a">›</div>
+        <div class="n">③ Exercice<br><small>saisie ou QCM</small></div><div class="a">›</div>
+        <div class="n">④ Correction<br><small>indice + 2e essai</small></div><div class="a">›</div>
+        <div class="n">⑤ Résultat de la série</div>
+      </div>
+      <div class="lbl" style="margin-top:14px">Côté parent</div>
+      <div class="flow">
+        <div class="n">⑥ Compétences<br><small>feux</small></div><div class="a">›</div>
+        <div class="n">⑦ Indicateurs<br><small>TAG · IVR · TRE</small></div><div class="a">›</div>
+        <div class="n">⑧ Courbe + radar</div><div class="a">›</div>
+        <div class="n">⑨ Export PDF<br><small>Avant / Après</small></div>
+      </div>
+      <h3 style="margin-top:14px">Navigation</h3>
+      <div class="note">Une barre du bas à trois entrées : <b>Élèves</b>, <b>Exercices</b> et <b>Espace parent</b>. Un compteur discret mesure le temps de chaque exercice (indicateur IVR) sans stresser l'enfant.</div>
+    </div>
+  </div>
+  <div class="box" style="margin-top:14px">
+    <h3>Les 3 indicateurs calculés en tâche de fond</h3>
+    <table class="t">
+      <tr><th style="width:24%">Indicateur</th><th style="width:38%">Définition</th><th>Lecture pour le parent</th></tr>
+      <tr><td><b>TAG %</b> Taux d'Acquisition Global</td><td>Situations-problèmes réussies dès le <b>premier essai</b> / situations proposées</td><td>Plus il monte, plus l'enfant maîtrise sans aide</td></tr>
+      <tr><td><b>IVR</b> Indice de Vitesse de Résolution</td><td>Temps moyen (Stopwatch) entre l'affichage de l'énoncé et la validation</td><td>Une baisse du temps indique une meilleure assimilation</td></tr>
+      <tr><td><b>TRE %</b> Taux de Réduction des Erreurs</td><td>Compétences passées de Rouge à Vert après les modules de remédiation / compétences déjà passées au Rouge</td><td>Mesure l'efficacité de la remédiation</td></tr>
+    </table>
+  </div>
+  <div class="pied"><span>MboaCompétences · Maquette</span><span>Page 2</span></div>
+  <div class="bande"><i></i><i></i><i></i></div>
+</section>
+
+<!-- ============ ÉCRANS 1-3 ============ -->
+<section class="page">
+  <h1 class="titre">Espace élève (1/2)</h1>
+  <div class="sous">Choix du profil, accueil et exercice de mathématiques contextualisé.</div>
+  <div class="phones">
+
+    <div class="fig"><div class="phone">
+      <div class="status"><span>9:41</span><span>✈ hors-ligne</span></div>
+      <div class="appbar">🌳 MboaCompétences</div>
+      <div class="body">
+        <div class="lbl">Qui joue aujourd'hui ?</div>
+        <div class="card row"><div class="avatar">A</div><div class="grow"><b style="font-size:13px">Aïcha</b><br><span style="color:var(--gris)">CM1 · 124 exercices</span></div><span style="color:var(--vert);font-size:18px">›</span></div>
+        <div class="card row"><div class="avatar" style="background:#BFE8DB">K</div><div class="grow"><b style="font-size:13px">Kevin</b><br><span style="color:var(--gris)">CE2 · 48 exercices</span></div><span style="color:var(--vert);font-size:18px">›</span></div>
+        <div class="card row"><div class="avatar" style="background:#F9C7CD">M</div><div class="grow"><b style="font-size:13px">Mireille</b><br><span style="color:var(--gris)">SIL · 12 exercices</span></div><span style="color:var(--vert);font-size:18px">›</span></div>
+        <div class="grow"></div>
+        <div class="btn sec">＋ Ajouter un enfant</div>
+        <div class="btn jaune">🧪 Charger des données de démonstration</div>
+      </div>
+      <div class="nav"><div class="on"><b>👧</b>Élèves</div><div><b>✏️</b>Exercices</div><div><b>📊</b>Parent</div></div>
+    </div><div class="leg">1 · Choix du profil<small>Plusieurs enfants sur le même téléphone</small></div></div>
+
+    <div class="fig"><div class="phone">
+      <div class="status"><span>9:41</span><span>✈ hors-ligne</span></div>
+      <div class="appbar"><div class="avatar" style="width:28px;height:28px;font-size:14px">A</div><div>Bonjour Aïcha !<br><small>CM1 · série du jour : 3/5</small></div><div class="sp"></div>⭐ 86</div>
+      <div class="body">
+        <div class="lbl">Choisis une matière</div>
+        <div class="matiere" style="background:var(--vert)"><div class="ic">🧮</div><div><b>Mathématiques</b><small>Marché, monnaie, partage</small></div></div>
+        <div class="matiere" style="background:#2563EB"><div class="ic">📖</div><div><b>Français</b><small>Conjugaison, accords</small></div></div>
+        <div class="matiere" style="background:#C2410C"><div class="ic">🌿</div><div><b>Éveil</b><small>Santé, environnement, citoyenneté</small></div></div>
+        <div class="card" style="border-color:var(--rouge);background:#FFF5F6">
+          <div class="row"><span class="dot r"></span><b>À retravailler</b></div>
+          <div style="margin:4px 0 6px;color:var(--gris)">Rendre la monnaie · Division</div>
+          <div class="btn rouge" style="padding:7px">🩹 Lancer la remédiation</div>
+        </div>
+      </div>
+      <div class="nav"><div><b>👧</b>Élèves</div><div class="on"><b>✏️</b>Exercices</div><div><b>📊</b>Parent</div></div>
+    </div><div class="leg">2 · Accueil de l'élève<small>Matières et accès à la remédiation</small></div></div>
+
+    <div class="fig"><div class="phone">
+      <div class="status"><span>9:41</span><span>✈ hors-ligne</span></div>
+      <div class="appbar">← 🧮 Mathématiques <div class="sp"></div><small>⏱ 00:42</small></div>
+      <div class="body">
+        <div class="row"><span class="lbl">Exercice 3 sur 5</span><div class="grow"><div class="bar"><i style="width:60%;background:var(--jaune)"></i></div></div></div>
+        <div class="chip" style="background:var(--vert-clair);color:var(--vert-fonce);align-self:flex-start">Vie économique · Rendre la monnaie</div>
+        <div class="enonce">Au <b>marché Mokolo</b> de Yaoundé, Aïcha achète <b>3 kg de manioc</b> à <b>350 FCFA</b> le kilo. Elle donne un billet de <b>2 000 FCFA</b>.<br><br>Combien le vendeur doit-il lui rendre ?</div>
+        <div class="lbl">Ta réponse (en FCFA)</div>
+        <div class="input">950</div>
+        <div style="font-size:9.5px;color:var(--gris);text-align:center">💡 Calcule d'abord le prix total des 3 kilos.</div>
+        <div class="grow"></div>
+        <div class="btn">Valider ✓</div>
+      </div>
+      <div class="nav"><div><b>👧</b>Élèves</div><div class="on"><b>✏️</b>Exercices</div><div><b>📊</b>Parent</div></div>
+    </div><div class="leg">3 · Exercice de mathématiques<small>Situation-problème locale, chrono discret</small></div></div>
+
+  </div>
+  <div class="pied"><span>MboaCompétences · Maquette</span><span>Page 3</span></div>
+  <div class="bande"><i></i><i></i><i></i></div>
+</section>
+
+<!-- ============ ÉCRANS 4-6 ============ -->
+<section class="page">
+  <h1 class="titre">Espace élève (2/2) et début de l'espace parent</h1>
+  <div class="sous">Correction d'un QCM d'éveil, résultat de la série et état des compétences.</div>
+  <div class="phones">
+
+    <div class="fig"><div class="phone">
+      <div class="status"><span>9:41</span><span>✈ hors-ligne</span></div>
+      <div class="appbar">← 🌿 Éveil <div class="sp"></div><small>⏱ 00:18</small></div>
+      <div class="body">
+        <div class="row"><span class="lbl">Exercice 4 sur 5</span><div class="grow"><div class="bar"><i style="width:80%;background:var(--jaune)"></i></div></div></div>
+        <div class="chip" style="background:#FDECEE;color:var(--rouge);align-self:flex-start">Santé et hygiène · Paludisme</div>
+        <div class="enonce">À <b>Douala</b>, la saison des pluies commence. Kevin veut éviter le <b>paludisme</b>. Que doit-il faire ?</div>
+        <div class="qcm">A. Boire de l'eau de la mare</div>
+        <div class="qcm ko">B. Dormir sans moustiquaire ✗</div>
+        <div class="qcm ok">C. Dormir sous une moustiquaire imprégnée ✓</div>
+        <div class="card" style="background:#E8F8EE;border-color:#16A34A">
+          <b style="color:#15803D">Bien joué au 2e essai !</b><br>
+          Les moustiques piquent la nuit : la moustiquaire t'en protège. Ce 2e essai ne compte pas pour le TAG, mais tu progresses.
+        </div>
+        <div class="grow"></div>
+        <div class="btn">Question suivante ›</div>
+      </div>
+      <div class="nav"><div><b>👧</b>Élèves</div><div class="on"><b>✏️</b>Exercices</div><div><b>📊</b>Parent</div></div>
+    </div><div class="leg">4 · QCM et correction<small>Explication + 2e essai (le 1er essai compte pour le TAG)</small></div></div>
+
+    <div class="fig"><div class="phone">
+      <div class="status"><span>9:41</span><span>✈ hors-ligne</span></div>
+      <div class="appbar">🏁 Série terminée</div>
+      <div class="body" style="align-items:center;text-align:center">
+        <div style="font-size:52px;margin-top:4px">🎉</div>
+        <div style="font-size:16px;font-weight:700;color:var(--vert-fonce)">Bravo Aïcha !</div>
+        <div style="font-size:26px;letter-spacing:4px">⭐⭐⭐<span style="opacity:.25">⭐⭐</span></div>
+        <div class="kpi" style="width:100%">
+          <div class="card"><b>4/5</b>réussis au<br>1er essai</div>
+          <div class="card"><b>38 s</b>temps moyen<br>par exercice</div>
+        </div>
+        <div class="card" style="width:100%;text-align:left">
+          <div class="lbl">Compétences travaillées</div>
+          <div class="row" style="margin-top:5px"><span class="dot v"></span> Multiplication <span class="grow"></span><span class="chip" style="background:#E8F8EE;color:#15803D">acquise</span></div>
+          <div class="row" style="margin-top:4px"><span class="dot o"></span> Rendre la monnaie <span class="grow"></span><span class="chip" style="background:#FEF3C7;color:#B45309">en cours</span></div>
+          <div class="row" style="margin-top:4px"><span class="dot r"></span> Hygiène : paludisme <span class="grow"></span><span class="chip" style="background:#FDECEE;color:var(--rouge)">à revoir</span></div>
+        </div>
+        <div class="grow"></div>
+        <div class="btn" style="width:100%">Rejouer une série</div>
+        <div class="btn sec" style="width:100%">Retour à l'accueil</div>
+      </div>
+      <div class="nav"><div><b>👧</b>Élèves</div><div class="on"><b>✏️</b>Exercices</div><div><b>📊</b>Parent</div></div>
+    </div><div class="leg">5 · Résultat de la série<small>Étoiles et feux, sans note chiffrée</small></div></div>
+
+    <div class="fig"><div class="phone">
+      <div class="status"><span>9:41</span><span>✈ hors-ligne</span></div>
+      <div class="appbar">📊 Espace parent <div class="sp"></div><small>Aïcha · CM1</small></div>
+      <div class="tabs"><div class="on">Compétences</div><div>Indicateurs</div><div>Progrès</div><div>Bilan</div></div>
+      <div class="body" style="gap:6px">
+        <div class="lbl">Mathématiques · Vie économique</div>
+        <div class="card" style="padding:6px 9px">
+          <div class="row"><span class="dot v"></span><span class="grow">Additionner des prix</span><b style="color:#15803D">92 %</b></div>
+          <div class="row" style="margin-top:6px"><span class="dot v"></span><span class="grow">Multiplier (quantités)</span><b style="color:#15803D">85 %</b></div>
+          <div class="row" style="margin-top:6px"><span class="dot o"></span><span class="grow">Rendre la monnaie</span><b style="color:#B45309">58 %</b></div>
+          <div class="row" style="margin-top:6px"><span class="dot r"></span><span class="grow">Partager (division)</span><b style="color:var(--rouge)">30 %</b></div>
+        </div>
+        <div class="lbl">Français · Langue</div>
+        <div class="card" style="padding:6px 9px">
+          <div class="row"><span class="dot o"></span><span class="grow">Conjuguer au présent</span><b style="color:#B45309">64 %</b></div>
+          <div class="row" style="margin-top:6px"><span class="dot v"></span><span class="grow">Pluriel des noms</span><b style="color:#15803D">80 %</b></div>
+        </div>
+        <div class="lbl">Éveil · Santé, environnement, citoyenneté</div>
+        <div class="card" style="padding:6px 9px">
+          <div class="row"><span class="dot r"></span><span class="grow">Prévenir le paludisme</span><b style="color:var(--rouge)">35 %</b></div>
+          <div class="row" style="margin-top:6px"><span class="dot v"></span><span class="grow">Gérer les déchets</span><b style="color:#15803D">88 %</b></div>
+          <div class="row" style="margin-top:6px"><span class="dot g"></span><span class="grow">Respecter le code de la route</span><span style="color:var(--gris)">à découvrir</span></div>
+        </div>
+      </div>
+      <div class="nav"><div><b>👧</b>Élèves</div><div><b>✏️</b>Exercices</div><div class="on"><b>📊</b>Parent</div></div>
+    </div><div class="leg">6 · Parent : compétences<small>Système de feux tricolores par compétence</small></div></div>
+
+  </div>
+  <div class="pied"><span>MboaCompétences · Maquette</span><span>Page 4</span></div>
+  <div class="bande"><i></i><i></i><i></i></div>
+</section>
+
+<!-- ============ ÉCRANS 7-9 ============ -->
+<section class="page">
+  <h1 class="titre">Espace parent : indicateurs, graphiques et export</h1>
+  <div class="sous">Les KPI, la courbe de progression, le radar et le bilan PDF Avant / Après.</div>
+  <div class="phones">
+
+    <div class="fig"><div class="phone">
+      <div class="status"><span>9:41</span><span>✈ hors-ligne</span></div>
+      <div class="appbar">📊 Espace parent <div class="sp"></div><small>Aïcha · CM1</small></div>
+      <div class="tabs"><div>Compétences</div><div class="on">Indicateurs</div><div>Progrès</div><div>Bilan</div></div>
+      <div class="body">
+        <div class="card" style="text-align:center">
+          <div class="lbl">Taux d'Acquisition Global (TAG)</div>
+          <div style="font-size:40px;font-weight:700;color:var(--vert)">72 %</div>
+          <div class="bar"><i style="width:72%;background:var(--vert)"></i></div>
+          <div style="margin-top:4px;color:#15803D">▲ +21 points depuis le début</div>
+        </div>
+        <div class="card" style="text-align:center">
+          <div class="lbl">Indice de Vitesse de Résolution (IVR)</div>
+          <div style="font-size:30px;font-weight:700;color:var(--vert)">34 s</div>
+          <div>temps moyen par exercice</div>
+          <div style="margin-top:3px;color:#15803D">▼ −28 % : l'enfant va plus vite</div>
+        </div>
+        <div class="card" style="text-align:center">
+          <div class="lbl">Taux de Réduction des Erreurs (TRE)</div>
+          <div style="font-size:30px;font-weight:700;color:var(--vert)">67 %</div>
+          <div>4 compétences sur 6 passées de Rouge à Vert</div>
+          <div style="margin-top:3px;color:var(--gris)">en 7 exercices de remédiation en moyenne</div>
+        </div>
+      </div>
+      <div class="nav"><div><b>👧</b>Élèves</div><div><b>✏️</b>Exercices</div><div class="on"><b>📊</b>Parent</div></div>
+    </div><div class="leg">7 · Parent : indicateurs<small>TAG, IVR et TRE avec tendance</small></div></div>
+
+    <div class="fig"><div class="phone">
+      <div class="status"><span>9:41</span><span>✈ hors-ligne</span></div>
+      <div class="appbar">📊 Espace parent <div class="sp"></div><small>Aïcha · CM1</small></div>
+      <div class="tabs"><div>Compétences</div><div>Indicateurs</div><div class="on">Progrès</div><div>Bilan</div></div>
+      <div class="body">
+        <div class="card">
+          <div class="lbl">Courbe de progression · trimestre</div>
+          <svg viewBox="0 0 220 104" width="100%" style="margin-top:4px">
+            <g stroke="#E5E7EB" stroke-width="1"><line x1="26" y1="8" x2="214" y2="8"/><line x1="26" y1="34" x2="214" y2="34"/><line x1="26" y1="60" x2="214" y2="60"/><line x1="26" y1="86" x2="214" y2="86"/></g>
+            <g font-size="7" fill="#6B7280"><text x="2" y="11">100</text><text x="6" y="37">75</text><text x="6" y="63">50</text><text x="6" y="89">25</text>
+              <text x="26" y="100">S1</text><text x="70" y="100">S3</text><text x="114" y="100">S5</text><text x="158" y="100">S7</text><text x="198" y="100">S9</text></g>
+            <polyline fill="none" stroke="#007A5E" stroke-width="2.5" points="26,72 48,66 70,69 92,56 114,50 136,42 158,38 180,28 206,22"/>
+            <g fill="#007A5E"><circle cx="26" cy="72" r="3"/><circle cx="70" cy="69" r="3"/><circle cx="114" cy="50" r="3"/><circle cx="158" cy="38" r="3"/><circle cx="206" cy="22" r="3.5"/></g>
+          </svg>
+        </div>
+        <div class="card">
+          <div class="lbl">Radar des domaines de la vie</div>
+          <svg viewBox="0 0 220 150" width="100%">
+            <g fill="none" stroke="#CBD5E1" stroke-width="1">
+              <polygon points="110,15 150,44 135,91 85,91 70,44"/>
+              <polygon points="110,36 130,50 123,73 97,73 90,50"/>
+            </g>
+            <g stroke="#E5E7EB"><line x1="110" y1="68" x2="110" y2="15"/><line x1="110" y1="68" x2="150" y2="44"/><line x1="110" y1="68" x2="135" y2="91"/><line x1="110" y1="68" x2="85" y2="91"/><line x1="110" y1="68" x2="70" y2="44"/></g>
+            <polygon points="110,24 140,48 124,84 92,78 80,46" fill="rgba(0,122,94,.28)" stroke="#007A5E" stroke-width="2"/>
+            <g font-size="7.5" fill="#1F2937" text-anchor="middle"><text x="110" y="10">Vie économique</text><text x="176" y="46">Santé</text><text x="150" y="104">Environnement</text><text x="70" y="104">Citoyenneté</text><text x="42" y="46">Langue</text></g>
+          </svg>
+        </div>
+      </div>
+      <div class="nav"><div><b>👧</b>Élèves</div><div><b>✏️</b>Exercices</div><div class="on"><b>📊</b>Parent</div></div>
+    </div><div class="leg">8 · Parent : progression<small>Courbe + radar dessinés avec le framework graphique de MAUI</small></div></div>
+
+    <div class="fig"><div class="phone">
+      <div class="status"><span>9:41</span><span>✈ hors-ligne</span></div>
+      <div class="appbar">📊 Espace parent <div class="sp"></div><small>Aïcha · CM1</small></div>
+      <div class="tabs"><div>Compétences</div><div>Indicateurs</div><div>Progrès</div><div class="on">Bilan</div></div>
+      <div class="body">
+        <div class="lbl">Bilan comparatif Avant / Après</div>
+        <div class="card">
+          <table class="t">
+            <tr><th></th><th>Avant</th><th>Après</th><th>Évol.</th></tr>
+            <tr><td>TAG</td><td>51 %</td><td>72 %</td><td style="color:#15803D"><b>▲ 21</b></td></tr>
+            <tr><td>IVR</td><td>47 s</td><td>34 s</td><td style="color:#15803D"><b>▼ 28 %</b></td></tr>
+            <tr><td>TRE</td><td>—</td><td>67 %</td><td style="color:#15803D"><b>▲</b></td></tr>
+            <tr><td>Compétences vertes</td><td>1</td><td>5</td><td style="color:#15803D"><b>+4</b></td></tr>
+          </table>
+        </div>
+        <div class="card" style="background:#fff;border:2px dashed var(--vert);text-align:center;padding:14px 8px">
+          <div style="font-size:30px">📄</div>
+          <b>Bilan_Aicha_CM1.pdf</b>
+          <div style="color:var(--gris);margin-top:2px">3 pages · généré sur le téléphone</div>
+        </div>
+        <div class="grow"></div>
+        <div class="btn">📤 Exporter en PDF</div>
+        <div class="btn sec">Partager avec l'enseignant</div>
+      </div>
+      <div class="nav"><div><b>👧</b>Élèves</div><div><b>✏️</b>Exercices</div><div class="on"><b>📊</b>Parent</div></div>
+    </div><div class="leg">9 · Parent : export PDF<small>Comparatif Avant / Après 1 mois, à montrer à l'enseignant</small></div></div>
+
+  </div>
+  <div class="pied"><span>MboaCompétences · Maquette</span><span>Page 5</span></div>
+  <div class="bande"><i></i><i></i><i></i></div>
+</section>
+
+</body>
+</html>

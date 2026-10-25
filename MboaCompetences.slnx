@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="MboaCompetences.Core/MboaCompetences.Core.csproj" />
+  <Project Path="MboaCompetences.Tests/MboaCompetences.Tests.csproj" />
+  <Project Path="MboaCompetences/MboaCompetences.csproj" />
+</Solution>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MboaCompetences.ViewModels"
+             x:Class="MboaCompetences.Views.ParentPage"
+             x:DataType="vm:ParentViewModel"
+             Title="📊 Espace parent">
+
+    <Grid>
+        <!-- aucun élève -->
+        <VerticalStackLayout IsVisible="{Binding AucunEleve}" VerticalOptions="Center" Padding="24" Spacing="12">
+            <Label Text="📊" FontSize="52" HorizontalOptions="Center" />
+            <Label Text="Choisissez d'abord un enfant" Style="{StaticResource Titre}" HorizontalOptions="Center" />
+            <Button Text="Choisir un enfant" Style="{StaticResource BoutonPrincipal}" Command="{Binding ChoisirEleveCommand}" />
+        </VerticalStackLayout>
+
+        <Grid IsVisible="{Binding ADesEleve}" RowDefinitions="Auto,Auto,*">
+            <!-- en-tête -->
+            <VerticalStackLayout Padding="16,10,16,6">
+                <Label Text="{Binding Titre}" Style="{StaticResource Titre}" AutomationId="titreParent" />
+                <Label Text="{Binding Periode}" Style="{StaticResource Gris}" />
+            </VerticalStackLayout>
+
+            <!-- onglets -->
+            <Grid Grid.Row="1" ColumnDefinitions="*,*,*,*" BackgroundColor="White" RowDefinitions="Auto,3">
+                <Label Text="Compétences" HorizontalOptions="Center" Padding="0,10" FontSize="13" TextColor="{StaticResource TexteGris}" AutomationId="ongletCompetences">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding Onglet0}" Value="True">
+                            <Setter Property="TextColor" Value="{StaticResource Vert}" />
+                            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                    <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding ChoisirOngletCommand}" CommandParameter="0" /></Label.GestureRecognizers>
+                </Label>
+                <Label Grid.Column="1" Text="Indicateurs" HorizontalOptions="Center" Padding="0,10" FontSize="13" TextColor="{StaticResource TexteGris}" AutomationId="ongletIndicateurs">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding Onglet1}" Value="True">
+                            <Setter Property="TextColor" Value="{StaticResource Vert}" />
+                            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                    <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding ChoisirOngletCommand}" CommandParameter="1" /></Label.GestureRecognizers>
+                </Label>
+                <Label Grid.Column="2" Text="Progrès" HorizontalOptions="Center" Padding="0,10" FontSize="13" TextColor="{StaticResource TexteGris}" AutomationId="ongletProgres">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding Onglet2}" Value="True">
+                            <Setter Property="TextColor" Value="{StaticResource Vert}" />
+                            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                    <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding ChoisirOngletCommand}" CommandParameter="2" /></Label.GestureRecognizers>
+                </Label>
+                <Label Grid.Column="3" Text="Bilan" HorizontalOptions="Center" Padding="0,10" FontSize="13" TextColor="{StaticResource TexteGris}" AutomationId="ongletBilan">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding Onglet3}" Value="True">
+                            <Setter Property="TextColor" Value="{StaticResource Vert}" />
+                            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                    <Label.GestureRecognizers><TapGestureRecognizer Command="{Binding ChoisirOngletCommand}" CommandParameter="3" /></Label.GestureRecognizers>
+                </Label>
+                <BoxView Grid.Row="1" Grid.Column="0" Color="{StaticResource Vert}" IsVisible="{Binding Onglet0}" />
+                <BoxView Grid.Row="1" Grid.Column="1" Color="{StaticResource Vert}" IsVisible="{Binding Onglet1}" />
+                <BoxView Grid.Row="1" Grid.Column="2" Color="{StaticResource Vert}" IsVisible="{Binding Onglet2}" />
+                <BoxView Grid.Row="1" Grid.Column="3" Color="{StaticResource Vert}" IsVisible="{Binding Onglet3}" />
+            </Grid>
+
+            <ScrollView Grid.Row="2">
+                <Grid>
+                    <!-- ============ 0 : compétences ============ -->
+                    <VerticalStackLayout IsVisible="{Binding Onglet0}" Padding="16,12" Spacing="10"
+                                         BindableLayout.ItemsSource="{Binding Groupes}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:GroupeCompetences">
+                                <VerticalStackLayout Spacing="6">
+                                    <Label Text="{Binding Titre}" Style="{StaticResource Etiquette}" />
+                                    <Border Style="{StaticResource Carte}" Padding="12,8">
+                                        <VerticalStackLayout Spacing="9" BindableLayout.ItemsSource="{Binding Lignes}">
+                                            <BindableLayout.ItemTemplate>
+                                                <DataTemplate x:DataType="vm:LigneCompetence">
+                                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                                        <BoxView WidthRequest="12" HeightRequest="12" CornerRadius="6" Color="{Binding Feu}" VerticalOptions="Center" />
+                                                        <Label Grid.Column="1" Text="{Binding Libelle}" VerticalOptions="Center" />
+                                                        <Label Grid.Column="2" Text="{Binding PourcentTexte}" TextColor="{Binding PourcentCouleur}"
+                                                               FontFamily="OpenSansSemibold" FontSize="13" VerticalOptions="Center" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </BindableLayout.ItemTemplate>
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <!-- ============ 1 : indicateurs ============ -->
+                    <VerticalStackLayout IsVisible="{Binding Onglet1}" Padding="16,12" Spacing="12">
+                        <Border Style="{StaticResource Carte}">
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Fill">
+                                <Label Text="Taux d'Acquisition Global (TAG)" Style="{StaticResource Etiquette}" HorizontalOptions="Center" />
+                                <Label Text="{Binding TagTexte}" FontSize="44" FontFamily="OpenSansSemibold" TextColor="{StaticResource Vert}"
+                                       HorizontalOptions="Center" AutomationId="tag" />
+                                <ProgressBar Progress="{Binding TagBarre}" ProgressColor="{StaticResource Vert}" />
+                                <Label Text="{Binding TagTendance}" TextColor="{Binding TagCouleur}" FontSize="13" HorizontalOptions="Center" />
+                                <Label Text="Réussites dès le premier essai" Style="{StaticResource Gris}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Style="{StaticResource Carte}">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Indice de Vitesse de Résolution (IVR)" Style="{StaticResource Etiquette}" HorizontalOptions="Center" />
+                                <Label Text="{Binding IvrTexte}" FontSize="34" FontFamily="OpenSansSemibold" TextColor="{StaticResource Vert}"
+                                       HorizontalOptions="Center" AutomationId="ivr" />
+                                <Label Text="temps moyen par exercice" Style="{StaticResource Gris}" HorizontalOptions="Center" />
+                                <Label Text="{Binding IvrTendance}" TextColor="{Binding IvrCouleur}" FontSize="13" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Style="{StaticResource Carte}">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Taux de Réduction des Erreurs (TRE)" Style="{StaticResource Etiquette}" HorizontalOptions="Center" />
+                                <Label Text="{Binding TreTexte}" FontSize="34" FontFamily="OpenSansSemibold" TextColor="{StaticResource Vert}"
+                                       HorizontalOptions="Center" AutomationId="tre" />
+                                <Label Text="{Binding TreDetail}" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="13" />
+                                <Label Text="{Binding TreRemediation}" Style="{StaticResource Gris}" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Label Text="{Binding NbExercices}" Style="{StaticResource Gris}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <!-- ============ 2 : progrès ============ -->
+                    <VerticalStackLayout IsVisible="{Binding Onglet2}" Padding="16,12" Spacing="12">
+                        <Border Style="{StaticResource Carte}">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="Courbe de progression · trimestre" Style="{StaticResource Etiquette}" />
+                                <GraphicsView x:Name="VueCourbe" HeightRequest="190" />
+                                <Label Text="Taux de réussite au 1er essai (%) par semaine" Style="{StaticResource Gris}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Style="{StaticResource Carte}">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="Radar des domaines de la vie" Style="{StaticResource Etiquette}" />
+                                <GraphicsView x:Name="VueRadar" HeightRequest="290" />
+                                <Label Text="{Binding LegendeRadar}" Style="{StaticResource Gris}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- ============ 3 : bilan ============ -->
+                    <VerticalStackLayout IsVisible="{Binding Onglet3}" Padding="16,12" Spacing="12">
+                        <Label Text="Bilan comparatif Avant / Après" Style="{StaticResource Etiquette}" />
+                        <Border Style="{StaticResource Carte}" Padding="0">
+                            <VerticalStackLayout>
+                                <Grid ColumnDefinitions="1.2*,*,*,*" BackgroundColor="{StaticResource Vert}" Padding="12,8">
+                                    <Label Text="" />
+                                    <Label Grid.Column="1" Text="Avant" TextColor="White" FontFamily="OpenSansSemibold" FontSize="12" />
+                                    <Label Grid.Column="2" Text="Après" TextColor="White" FontFamily="OpenSansSemibold" FontSize="12" />
+                                    <Label Grid.Column="3" Text="Évol." TextColor="White" FontFamily="OpenSansSemibold" FontSize="12" />
+                                </Grid>
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding LignesBilan}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:LigneBilan">
+                                            <Grid ColumnDefinitions="1.2*,*,*,*" Padding="12,9">
+                                                <Label Text="{Binding Nom}" FontFamily="OpenSansSemibold" TextColor="{StaticResource VertFonce}" />
+                                                <Label Grid.Column="1" Text="{Binding Avant}" />
+                                                <Label Grid.Column="2" Text="{Binding Apres}" FontFamily="OpenSansSemibold" />
+                                                <Label Grid.Column="3" Text="{Binding Evolution}" TextColor="{Binding CouleurEvolution}" FontFamily="OpenSansSemibold" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border BackgroundColor="White" Stroke="{StaticResource Vert}" StrokeDashArray="4,3" StrokeThickness="2"
+                                StrokeShape="RoundRectangle 14" Padding="14">
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label Text="📄" FontSize="34" HorizontalOptions="Center" />
+                                <Label Text="Bilan de compétences (PDF)" FontFamily="OpenSansSemibold" HorizontalOptions="Center" />
+                                <Label Text="Généré sur le téléphone, à présenter à l'enseignant" Style="{StaticResource Gris}"
+                                       HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding MessageExport}" TextColor="{StaticResource Vert}" FontSize="12"
+                                       HorizontalTextAlignment="Center" AutomationId="messageExport" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Button Text="📤 Exporter en PDF" Style="{StaticResource BoutonPrincipal}" Command="{Binding ExporterCommand}"
+                                IsEnabled="{Binding PeutExporter}" AutomationId="boutonExporter" />
+                        <Button Text="Partager avec l'enseignant" Style="{StaticResource BoutonSecondaire}"
+                                IsVisible="{Binding PdfPret}" Command="{Binding PartagerCommand}" />
+                        <ActivityIndicator IsRunning="{Binding ExportEnCours}" IsVisible="{Binding ExportEnCours}" Color="{StaticResource Vert}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </ScrollView>
+        </Grid>
+    </Grid>
+</ContentPage>

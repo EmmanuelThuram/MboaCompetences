@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Couleurs du Cameroun -->
+    <Color x:Key="Vert">#007A5E</Color>
+    <Color x:Key="VertFonce">#00573F</Color>
+    <Color x:Key="VertClair">#E3F4EE</Color>
+    <Color x:Key="Rouge">#CE1126</Color>
+    <Color x:Key="RougeClair">#FDECEE</Color>
+    <Color x:Key="Jaune">#FCD116</Color>
+    <Color x:Key="JauneClair">#FFFBE6</Color>
+
+    <!-- Feux tricolores -->
+    <Color x:Key="FeuVert">#16A34A</Color>
+    <Color x:Key="FeuOrange">#F59E0B</Color>
+    <Color x:Key="FeuRouge">#CE1126</Color>
+    <Color x:Key="FeuGris">#CBD5E1</Color>
+
+    <!-- Neutres -->
+    <Color x:Key="Texte">#1F2937</Color>
+    <Color x:Key="TexteGris">#6B7280</Color>
+    <Color x:Key="Fond">#F7F8F5</Color>
+    <Color x:Key="Carte">#FFFFFF</Color>
+    <Color x:Key="Bord">#E5E7EB</Color>
+    <Color x:Key="Bleu">#2563EB</Color>
+    <Color x:Key="Brique">#C2410C</Color>
+
+    <SolidColorBrush x:Key="VertBrush" Color="{StaticResource Vert}" />
+    <SolidColorBrush x:Key="CarteBrush" Color="{StaticResource Carte}" />
+</ResourceDictionary>

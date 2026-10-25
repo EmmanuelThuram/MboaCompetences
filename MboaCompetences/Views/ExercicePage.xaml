@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MboaCompetences.ViewModels"
+             x:Class="MboaCompetences.Views.ExercicePage"
+             x:DataType="vm:ExerciceViewModel"
+             Title="{Binding Titre}">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="16,12" RowSpacing="10">
+
+        <!-- retour -->
+        <Button Text="← Retour" Style="{StaticResource BoutonSecondaire}" HorizontalOptions="Start"
+                Padding="16,0" HeightRequest="40" Command="{Binding QuitterCommand}" AutomationId="boutonRetour" />
+
+        <!-- progression et chronomètre -->
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+            <Label Text="{Binding Compteur}" Style="{StaticResource Etiquette}" VerticalOptions="Center" />
+            <ProgressBar Grid.Column="1" Progress="{Binding Progression}" ProgressColor="{StaticResource Jaune}" VerticalOptions="Center" />
+            <Label Grid.Column="2" Text="{Binding Chrono}" Style="{StaticResource Gris}" VerticalOptions="Center" AutomationId="chrono" />
+        </Grid>
+
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Spacing="10">
+                <Border BackgroundColor="{StaticResource VertClair}" StrokeThickness="0" StrokeShape="RoundRectangle 12"
+                        Padding="10,4" HorizontalOptions="Start">
+                    <Label Text="{Binding Competence}" TextColor="{StaticResource VertFonce}" FontFamily="OpenSansSemibold" FontSize="12" />
+                </Border>
+
+                <Border BackgroundColor="{StaticResource JauneClair}" Stroke="#F3E39A" StrokeThickness="1"
+                        StrokeShape="RoundRectangle 14" Padding="14">
+                    <Label Text="{Binding Enonce}" FontSize="17" LineHeight="1.3" AutomationId="enonce" />
+                </Border>
+
+                <!-- réponse à saisir -->
+                <VerticalStackLayout IsVisible="{Binding EstSaisie}" Spacing="4">
+                    <Label Text="{Binding Unite, StringFormat='Ta réponse (en {0})'}" Style="{StaticResource Etiquette}" />
+                    <Border Stroke="{StaticResource Vert}" StrokeThickness="2" StrokeShape="RoundRectangle 14"
+                            BackgroundColor="White" Padding="8,0">
+                        <Entry Text="{Binding Reponse}" Keyboard="Numeric" HorizontalTextAlignment="Center" FontSize="28"
+                               FontFamily="OpenSansSemibold" TextColor="{StaticResource VertFonce}" Placeholder="0"
+                               IsEnabled="{Binding SaisieActive}" ReturnCommand="{Binding ValiderCommand}"
+                               AutomationId="champReponse" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- choix multiples -->
+                <VerticalStackLayout IsVisible="{Binding EstQcm}" Spacing="8" BindableLayout.ItemsSource="{Binding Choix}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ChoixVm">
+                            <Border BackgroundColor="{Binding Fond}" Stroke="{Binding Contour}" StrokeThickness="2"
+                                    StrokeShape="RoundRectangle 14" Padding="12,10">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                    <Label Text="{Binding Lettre}" FontFamily="OpenSansSemibold" TextColor="{StaticResource Vert}" />
+                                    <Label Grid.Column="1" Text="{Binding Texte}" FontAttributes="{Binding Gras}" />
+                                </Grid>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Toucher}" />
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Label Text="{Binding Indice}" IsVisible="{Binding IndiceVisible}" Style="{StaticResource Gris}"
+                       HorizontalTextAlignment="Center" FontSize="13" />
+
+                <!-- correction -->
+                <Border IsVisible="{Binding RetourVisible}" BackgroundColor="{Binding FondRetour}" Stroke="{Binding CouleurRetour}"
+                        StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="12">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding TitreRetour}" FontFamily="OpenSansSemibold" TextColor="{Binding CouleurRetour}" />
+                        <Label Text="{Binding TexteRetour}" FontSize="13" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="3" Text="{Binding TexteBouton}" Style="{StaticResource BoutonPrincipal}"
+                IsEnabled="{Binding BoutonActif}" Command="{Binding ValiderCommand}" AutomationId="boutonValider" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MboaCompetences.ViewModels"
+             x:Class="MboaCompetences.Views.AccueilPage"
+             x:DataType="vm:AccueilViewModel"
+             Title="Exercices">
+
+    <Grid>
+        <!-- aucun élève -->
+        <VerticalStackLayout IsVisible="{Binding AucunEleve}" VerticalOptions="Center" Padding="24" Spacing="12">
+            <Label Text="👧👦" FontSize="52" HorizontalOptions="Center" />
+            <Label Text="Choisissez d'abord un enfant" Style="{StaticResource Titre}" HorizontalOptions="Center" />
+            <Button Text="Choisir un enfant" Style="{StaticResource BoutonPrincipal}" Command="{Binding ChoisirEleveCommand}" />
+        </VerticalStackLayout>
+
+        <ScrollView IsVisible="{Binding ADesEleve}">
+            <VerticalStackLayout Padding="16,14" Spacing="12">
+                <!-- bandeau de bienvenue -->
+                <Border BackgroundColor="{StaticResource Vert}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="14">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Border WidthRequest="44" HeightRequest="44" StrokeThickness="0" StrokeShape="RoundRectangle 22"
+                                BackgroundColor="{Binding CouleurAvatar}">
+                            <Label Text="{Binding Initiale}" FontFamily="OpenSansSemibold" FontSize="22" TextColor="#3A2F00"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="{Binding Salutation}" TextColor="White" FontFamily="OpenSansSemibold" FontSize="18" />
+                            <Label Text="{Binding SousTitre}" TextColor="#D1FAE5" FontSize="12" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="{Binding Etoiles}" TextColor="White" FontFamily="OpenSansSemibold"
+                               FontSize="16" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <Label Text="Choisis une matière" Style="{StaticResource Etiquette}" />
+
+                <Border BackgroundColor="{StaticResource Vert}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="14"
+                        AutomationId="matiereMaths">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Border WidthRequest="48" HeightRequest="48" StrokeThickness="0" StrokeShape="RoundRectangle 14" BackgroundColor="#33FFFFFF">
+                            <Label Text="🧮" FontSize="28" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Mathématiques" TextColor="White" FontFamily="OpenSansSemibold" FontSize="18" />
+                            <Label Text="Marché, monnaie, partage" TextColor="White" FontSize="12" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChoisirMatiereCommand}" CommandParameter="Mathematiques" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <Border BackgroundColor="{StaticResource Bleu}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="14"
+                        AutomationId="matiereFrancais">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Border WidthRequest="48" HeightRequest="48" StrokeThickness="0" StrokeShape="RoundRectangle 14" BackgroundColor="#33FFFFFF">
+                            <Label Text="📖" FontSize="28" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Français" TextColor="White" FontFamily="OpenSansSemibold" FontSize="18" />
+                            <Label Text="Conjugaison, accords" TextColor="White" FontSize="12" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChoisirMatiereCommand}" CommandParameter="Francais" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <Border BackgroundColor="{StaticResource Brique}" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="14"
+                        AutomationId="matiereEveil">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Border WidthRequest="48" HeightRequest="48" StrokeThickness="0" StrokeShape="RoundRectangle 14" BackgroundColor="#33FFFFFF">
+                            <Label Text="🌿" FontSize="28" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Éveil" TextColor="White" FontFamily="OpenSansSemibold" FontSize="18" />
+                            <Label Text="Santé, environnement, citoyenneté" TextColor="White" FontSize="12" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChoisirMatiereCommand}" CommandParameter="Eveil" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <!-- remédiation -->
+                <Border IsVisible="{Binding ARetravailler}" BackgroundColor="{StaticResource RougeClair}" Stroke="{StaticResource Rouge}"
+                        StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="14">
+                    <VerticalStackLayout Spacing="6">
+                        <HorizontalStackLayout Spacing="8">
+                            <BoxView WidthRequest="12" HeightRequest="12" CornerRadius="6" Color="{StaticResource FeuRouge}" VerticalOptions="Center" />
+                            <Label Text="À retravailler" FontFamily="OpenSansSemibold" />
+                        </HorizontalStackLayout>
+                        <Label Text="{Binding TexteARetravailler}" Style="{StaticResource Gris}" />
+                        <Button Text="🩹 Lancer la remédiation" Style="{StaticResource BoutonRouge}" Margin="0,4,0,0"
+                                Command="{Binding ChoisirMatiereCommand}" CommandParameter="Remediation" AutomationId="boutonRemediation" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MboaCompetences.ViewModels"
+             x:Class="MboaCompetences.Views.ResultatPage"
+             x:DataType="vm:ResultatViewModel"
+             Shell.BackButtonBehavior="{BackButtonBehavior IsVisible=False}"
+             Title="🏁 Série terminée">
+
+    <Grid RowDefinitions="*,Auto" Padding="16,12" RowSpacing="8">
+        <ScrollView>
+            <VerticalStackLayout Spacing="12" HorizontalOptions="Fill">
+                <Label Text="🎉" FontSize="56" HorizontalOptions="Center" />
+                <Label Text="{Binding Felicitations}" Style="{StaticResource Titre}" HorizontalOptions="Center" FontSize="24" />
+                <Label Text="{Binding Etoiles}" FontSize="30" HorizontalOptions="Center" AutomationId="etoiles" />
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Border Style="{StaticResource Carte}">
+                        <VerticalStackLayout HorizontalOptions="Center">
+                            <Label Text="{Binding Reussis}" FontFamily="OpenSansSemibold" FontSize="26" TextColor="{StaticResource VertFonce}"
+                                   HorizontalOptions="Center" AutomationId="reussis" />
+                            <Label Text="réussis au 1er essai" Style="{StaticResource Gris}" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" Style="{StaticResource Carte}">
+                        <VerticalStackLayout HorizontalOptions="Center">
+                            <Label Text="{Binding TempsMoyen}" FontFamily="OpenSansSemibold" FontSize="26" TextColor="{StaticResource VertFonce}"
+                                   HorizontalOptions="Center" />
+                            <Label Text="temps moyen par exercice" Style="{StaticResource Gris}" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <Label Text="Compétences travaillées" Style="{StaticResource Etiquette}" />
+                <Border Style="{StaticResource Carte}">
+                    <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Competences}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:CompetenceTravaillee">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                    <BoxView WidthRequest="12" HeightRequest="12" CornerRadius="6" Color="{Binding Feu}" VerticalOptions="Center" />
+                                    <Label Grid.Column="1" Text="{Binding Libelle}" VerticalOptions="Center" />
+                                    <Border Grid.Column="2" BackgroundColor="{Binding StatutFond}" StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 10" Padding="8,2">
+                                        <Label Text="{Binding Statut}" TextColor="{Binding StatutCouleur}" FontFamily="OpenSansSemibold" FontSize="11" />
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="1" Spacing="8">
+            <Button Text="Rejouer une série" Style="{StaticResource BoutonPrincipal}" Command="{Binding RejouerCommand}" />
+            <Button Text="Retour à l'accueil" Style="{StaticResource BoutonSecondaire}" Command="{Binding RetourCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
